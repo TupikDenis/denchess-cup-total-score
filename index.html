@@ -1,0 +1,96 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .title}}</title>
+</head>
+<style>
+    body{
+        text-align: center;
+    }
+
+    table{
+        margin-left: 31.5%;
+        border-collapse: collapse;
+    }
+
+    td, th{
+        border: 1px solid black;
+        margin: -1px;   
+        text-align: center;
+        padding: 8px;   
+    }
+
+    th{
+        background: #b0e0e6;
+    }
+
+    .top{
+        background-color: greenyellow;
+    }
+</style>
+<body>
+    <form action="/add" method="post">
+        <input type="text" name="id" id="id" placeholder="Введите id турнира">
+        <input type="submit" name="sbm" id="sbm">
+    </form>
+    <h1>Общий зачёт кубка канала DenChess</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Место</th>
+                <th width="200px">Никнейм</th>
+                <th>Очки</th>
+                <th>К1</th>
+                <th>К2</th>
+                <th>К3</th>
+                <th>К4</th>
+                <th>К5</th>
+                <th>К6</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $key, $value := .total}} 
+            {{if lt $key 8}}
+            <tr>
+                <td class="top">{{ $value.Rank}}</td>
+                <td class="top" width="200px">{{ $value.Username}}</td>
+                <td class="top">{{ $value.TotalPoints}}</td>
+                <td class="top">{{ $value.TotalFirstPlace}}</td>
+                <td class="top">{{ $value.TotalSecondtPlace}}</td>
+                <td class="top">{{ $value.TotalThirdPlace}}</td>
+                <td class="top">{{ $value.TotalTOP10}}</td>
+                <td class="top">{{ $value.TotalParticipate}}</td>
+                <td class="top">{{ $value.TotalScore}}</td>
+            </tr>
+            {{else}}
+            {{if ne $value.TotalPoints 0}}
+            <tr>
+                <td>{{ $value.Rank}}</td>
+                <td width="200px">{{ $value.Username}}</td>
+                <td>{{ $value.TotalPoints}}</td>
+                <td>{{ $value.TotalFirstPlace}}</td>
+                <td>{{ $value.TotalSecondtPlace}}</td>
+                <td>{{ $value.TotalThirdPlace}}</td>
+                <td>{{ $value.TotalTOP10}}</td>
+                <td>{{ $value.TotalParticipate}}</td>
+                <td>{{ $value.TotalScore}}</td>
+            </tr>
+            {{end}}
+            {{end}}
+            {{end}}
+        </tbody>
+    </table>
+    <br>
+    <pre>
+        K1 - количество первых мест
+        К2 - количество вторых мест
+        K3 - количество третьих мест
+        К4 - количество попаданий в ТОП-10
+        K5 - количество участий
+        К6 - суммарное количество очков, набранные за все арены 
+    </pre>
+</body>
+</html>
